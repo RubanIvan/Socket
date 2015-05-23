@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -62,7 +63,16 @@ namespace Server
         private void SocketInit()
         {
             IPEndPoint IpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), int.Parse(TextBoxPort.Text));
-            sListner.Bind(IpEndPoint);
+
+            try
+            {
+                sListner.Bind(IpEndPoint);
+            }
+            catch (SocketException s)
+            {
+                MessageBox.Show(s.Message, "Error");
+                Application.Current.Shutdown();
+            }
             sListner.Listen(1);
             StartLisner();
         }
@@ -75,7 +85,15 @@ namespace Server
             ThreadLisner = new Thread(() =>
                 {
                     //ждем входяшие соединение
-                    handler = sListner.Accept();
+                    try
+                    {
+                        handler = sListner.Accept();
+                    }
+                    catch (SocketException s)
+                    {
+                        MessageBox.Show(s.Message, "Error");
+                        Application.Current.Shutdown();
+                    }
 
                     while (true)
                     {
@@ -85,10 +103,24 @@ namespace Server
                         while (true)
                         {
                             //получаем данные
-                            int ByteRes = handler.Receive(ResiveBuff);
+                            int ByteRes = 0;
+
+                            try
+                            {
+                                ByteRes = handler.Receive(ResiveBuff);
+                            }
+                            catch (SocketException s)
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    MessageBox.Show(s.Message, "Error");
+                                    Application.Current.Shutdown();
+                                });
+                                ThreadLisner.Abort();
+                            }
 
                             //собираем строку до кучи
-                            ResiveString.Append(Encoding.ASCII.GetString(ResiveBuff, 0, ByteRes));
+                            ResiveString.Append(Encoding.UTF8.GetString(ResiveBuff, 0, ByteRes));
 
                             //запоминаем длинну до изменений
                             int len = ResiveString.Length;
@@ -127,23 +159,21 @@ namespace Server
         }
 
 
-        /// <summary>убиваем процесс слушатель в случае закрытии окна</summary>
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
-            sListner.Shutdown(SocketShutdown.Both);
-            sListner.Close();
 
-            ThreadLisner.Abort();
-            
-        }
 
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             if (handler != null && handler.Connected)
             {
-                handler.Send(Encoding.ASCII.GetBytes(TextBoxSendText.Text + "<End>"));
+                try
+                {
+                    handler.Send(Encoding.UTF8.GetBytes(TextBoxSendText.Text + "<End>"));
+                }
+                catch (SocketException s)
+                {
+                    MessageBox.Show(s.Message, "Error");
+                    Application.Current.Shutdown();
+                }
 
                 TextRange rangeOfText1 = new TextRange(RichTextBox.Document.ContentEnd, RichTextBox.Document.ContentEnd);
                 rangeOfText1.Text = "-Server-: ";
@@ -151,7 +181,7 @@ namespace Server
                 rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
 
                 rangeOfText1 = new TextRange(RichTextBox.Document.ContentEnd, RichTextBox.Document.ContentEnd);
-                rangeOfText1.Text = TextBoxSendText.Text+"\n";
+                rangeOfText1.Text = TextBoxSendText.Text + "\n";
                 rangeOfText1.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
                 rangeOfText1.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
                 RichTextBox.ScrollToEnd();
@@ -161,6 +191,14 @@ namespace Server
             }
         }
 
+        /// <summary>убиваем процесс слушатель в случае закрытии окна</summary>
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (handler != null) handler.Close();
+            if (sListner != null) sListner.Close();
+            ThreadLisner.Abort();
+
+        }
 
 
     }

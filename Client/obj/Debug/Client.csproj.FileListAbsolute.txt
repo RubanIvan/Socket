@@ -1,0 +1,13 @@
+F:\visual\My_prog\Socket\Client\bin\Debug\Client.exe.config
+F:\visual\My_prog\Socket\Client\obj\Debug\MainWindow.baml
+F:\visual\My_prog\Socket\Client\obj\Debug\MainWindow.g.cs
+F:\visual\My_prog\Socket\Client\obj\Debug\App.g.cs
+F:\visual\My_prog\Socket\Client\obj\Debug\Client_MarkupCompile.cache
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.g.resources
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.Properties.Resources.resources
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+F:\visual\My_prog\Socket\Client\bin\Debug\Client.exe
+F:\visual\My_prog\Socket\Client\bin\Debug\Client.pdb
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.exe
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.pdb
+F:\visual\My_prog\Socket\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
