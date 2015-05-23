@@ -11,3 +11,16 @@ D:\Projects\Socket\Server\obj\Debug\Server.Properties.Resources.resources
 D:\Projects\Socket\Server\obj\Debug\Server.csproj.GenerateResource.Cache
 D:\Projects\Socket\Server\obj\Debug\Server.exe
 D:\Projects\Socket\Server\obj\Debug\Server.pdb
+F:\visual\My_prog\Socket\Server\bin\Debug\Server.exe.config
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.exe
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.pdb
+F:\visual\My_prog\Socket\Server\bin\Debug\Server.exe
+F:\visual\My_prog\Socket\Server\bin\Debug\Server.pdb
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+F:\visual\My_prog\Socket\Server\obj\Debug\MainWindow.baml
+F:\visual\My_prog\Socket\Server\obj\Debug\MainWindow.g.cs
+F:\visual\My_prog\Socket\Server\obj\Debug\App.g.cs
+F:\visual\My_prog\Socket\Server\obj\Debug\Server_MarkupCompile.cache
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.g.resources
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.Properties.Resources.resources
+F:\visual\My_prog\Socket\Server\obj\Debug\Server.csproj.GenerateResource.Cache
